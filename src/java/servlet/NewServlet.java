@@ -11,6 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.AccountDAO;
+import model.AccountDTO;
 
 /**
  *
@@ -27,7 +29,7 @@ public class NewServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     */
+     */ //MVC -> Model (DAO), View (html,jsp), Controller (Servlet)
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -37,8 +39,13 @@ public class NewServlet extends HttpServlet {
             String password = request.getParameter("password");
             System.out.println(username);
             System.out.println(password);
-
-            if (username.equals("admin") && password.equals("123")) {
+            
+            AccountDAO dao = new AccountDAO();
+            String loginResult = dao.checkLogin(username, password); // login fail
+            System.out.println(loginResult);
+            // khi nao accountDTO có dữ liệu
+            // khi nào không
+            if (loginResult.equals("Login success")) { // else
                 response.sendRedirect("success.html");
 
             } else {
