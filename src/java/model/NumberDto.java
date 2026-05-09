@@ -36,6 +36,11 @@ public class NumberDto { // sinh viên
     public void setNumber2(int number2) {
         this.number2 = number2;
     }
+
+    @Override
+    public String toString() {
+        return "NumberDto{" + "number1=" + number1 + ", number2=" + number2 + '}';
+    }
     
     
 }

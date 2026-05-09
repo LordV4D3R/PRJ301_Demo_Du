@@ -6,6 +6,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,29 +28,34 @@ public class TinhTongServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private final ArrayList<NumberDto> listNumber = new ArrayList<>();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String stringNb1 = null;
+        String stringNb2 = null;
+        
         try {
 
             request.setAttribute("GIA_TRI_SE_TRA_VE_JSP", "Trả về");
             NumberDto numberDto = new NumberDto();
 
-            String stringNb1 = request.getParameter("nb1"); // 20
+             stringNb1 = request.getParameter("nb1"); // 20
 
-            String stringNb2 = request.getParameter("nb2");
+             stringNb2 = request.getParameter("nb2");
             numberDto.setNumber1(Integer.parseInt(stringNb1));
             numberDto.setNumber2(Integer.parseInt(stringNb2));
 
             int tong = numberDto.getNumber1() + numberDto.getNumber2();
+            listNumber.add(numberDto);
+            request.setAttribute("LIST_NUMBER", listNumber);
 
             request.setAttribute("TONG", tong);
 
-            
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            request.getRequestDispatcher("TinhTong2Servlet").forward(request, response);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
 
         }
     } // MVC -> Model, View, Controller
